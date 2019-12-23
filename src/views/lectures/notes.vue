@@ -32,9 +32,13 @@
             <v-card-text>
                 {{ props.item.content }}
             </v-card-text>
+            <v-card-text>
+                {{ props.item.id }}
+            </v-card-text>
             <v-card-action>
                 <v-spacer></v-spacer>
-                <v-btn @click="put(props.item)">put</v-btn>
+                <v-btn @click="put(props.item.id)">put</v-btn>
+                <v-btn @click="del(props.item.id)">del</v-btn>
             </v-card-action>
           </v-card>
         </v-flex>
@@ -55,32 +59,46 @@ export default {
     content: ''
   }),
   mounted () {
-    this.items.push({
-      title: '수양레저',
-      content: '수양레저는 볼락 루어낚시와 감성돔 흘림낚시 포인트 제약을 해소하기 위해 모든 선외기에 전동윈치를 설치해 어떤 포인트에서든 돌 닷을 내리기만 하면 낚시가 가능합니다.'
-    })
-    this.items.push({
-      title: '경신레저',
-      content: '수상레져 자격증 1,2급 있으신분 한하여 1척당 1만원 할인하여드립니다. 출조시 자격증 지참확인후 할인하여 드립니다.'
-    })
+    this.get()
   },
   methods: {
-    post () {
-      this.items.push({
+    async post () {
+      const r = await this.$firebase.firestore().collection('notes').add({
         title: this.title,
         content: this.content
       })
+      await this.get()
+      console.log(r)
       this.title = ''
       this.content = ''
     },
-    get () {
+    async get () {
+      const snapshot = await this.$firebase.firestore().collection('notes').get()
+      this.items = []
+      snapshot.forEach(v => {
+        console.log(v.id)
+        const { title, content } = v.data()
+        this.items.push({
+          title, content, id: v.id
+        })
+      })
 
+      console.log(snapshot)
     },
-    put () {
-
+    async put (id) {
+      const r = await this.$firebase.firestore().collection('notes').doc(id).set({
+        title: this.title,
+        content: this.content
+      })
+      await this.get()
+      this.title = ''
+      this.content = ''
+      console.log(r)
     },
-    del () {
-
+    async del (id) {
+      const r = await this.$firebase.firestore().collection('notes').doc(id).delete()
+      await this.get()
+      console.log(r)
     }
   }
 }
