@@ -8,5 +8,5 @@ Vue.use(Vuetify, {
   components: {
     VLayout
   },
-  iconfont: 'mdi'
+  iconfont: 'md'
 })
