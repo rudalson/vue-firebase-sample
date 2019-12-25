@@ -1,4 +1,4 @@
-# test
+# vue-firebase-sample
 
 ## Prjoect 생성
 ```bash
@@ -14,15 +14,20 @@ $ vue create vue-firebase-sample
 - Standard
 - Use Yarn
 
-## vuetify
+## vuetify 설치
 ```bash
 $ vue add vuetify
 $ vue add vuetify@0.5   # vuetify 1.x 를 설치하기 위해
 ```
 
+## firebase tools 설치
+```bash
+$ yarn add firebase-tools
+```
+
 
 ## Visual Source Code Extensinos
-아래의 플러그인을 에디터에 추가해준다. 
+VSCode룰 사용한다면 아래의 플러그인을 에디터에 추가해준다. 
 - Task Explorer
 - vuetify vscode
 - eslint
@@ -39,7 +44,7 @@ $ vue add vuetify@0.5   # vuetify 1.x 를 설치하기 위해
 - MDI(Material Design Icon)
 
 ## 16강 firestore 설정하기
-1. `프로젝트 설정` - `</>` - 액 닉네임 설정
+1. `프로젝트 설정` - `</>` - 앱 닉네임 설정
 ```html
 <!-- The core Firebase JS SDK is always required and must be listed first -->
 <script src="/__/firebase/7.6.1/firebase-app.js"></script>
@@ -73,6 +78,21 @@ import 'firebase/firestore';
 firebase.initializeApp(firebaseConfig)
 ```
 
+## 19강 firebase functions
+```
+$ firebase init functions
+```
+그리고 `package.json`에서 node 버전을 올려준다.
+```json
+    "engines": {
+    "node": "10"
+    },
+```
+
+이후 yarn으로 설치해준다.
+```
+$ yarn
+```
 
 
 

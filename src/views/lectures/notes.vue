@@ -1,15 +1,15 @@
 <template>
   <v-container fluid grid-list-md>
     <v-layout>
-        <v-flex xs5>
-            <v-text-field v-model="title" label="title"></v-text-field>
-        </v-flex>
-        <v-flex xs5>
-            <v-text-field v-model="content" label="content"></v-text-field>
-        </v-flex>
-        <v-flex xs2>
-            <v-btn color="success" @click="post">post</v-btn>
-        </v-flex>
+      <v-flex xs5>
+        <v-text-field v-model="title" label="title"/>
+      </v-flex>
+      <v-flex xs5>
+        <v-text-field v-model="content" label="content"/>
+      </v-flex>
+      <v-flex xs2>
+        <v-btn color="success" @click="post">post</v-btn>
+      </v-flex>
     </v-layout>
     <v-data-iterator
       :items="items"
@@ -28,18 +28,18 @@
         >
           <v-card>
             <v-card-title><h4>{{ props.item.title }}</h4></v-card-title>
-            <v-divider></v-divider>
+            <v-divider/>
             <v-card-text>
-                {{ props.item.content }}
+              {{ props.item.content }}
             </v-card-text>
             <v-card-text>
-                {{ props.item.id }}
+              {{ props.item.id }}
             </v-card-text>
-            <v-card-action>
-                <v-spacer></v-spacer>
-                <v-btn @click="put(props.item.id)">put</v-btn>
-                <v-btn @click="del(props.item.id)">del</v-btn>
-            </v-card-action>
+            <v-card-actions>
+              <v-spacer/>
+              <v-btn @click="put(props.item.id)">put</v-btn>
+              <v-btn @click="del(props.item.id)">del</v-btn>
+            </v-card-actions>
           </v-card>
         </v-flex>
       </template>
@@ -82,7 +82,6 @@ export default {
           title, content, id: v.id
         })
       })
-
       console.log(snapshot)
     },
     async put (id) {
