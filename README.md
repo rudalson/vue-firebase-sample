@@ -94,6 +94,11 @@ $ firebase init functions
 $ yarn
 ```
 
+## 21강 axios 사용
+```'
+$ yarn add axios
+```
+
 
 
 ## Project setup
