@@ -89,12 +89,14 @@ export default {
     }
   },
   methods: {
-    create () {
-      this.$axios.post('http://localhost:5000/vue-tutorial-memi/us-central1/test')
-        .then(r => {
-          this.textCreate = r.data
-        })
-        .catch(e => console.error(e.message))
+    async create () {
+      //   this.$axios.post('http://localhost:5000/vue-tutorial-memi/us-central1/test')
+      //     .then(r => {
+      //       this.textCreate = r.data
+      //     })
+      //     .catch(e => console.error(e.message))
+      const r = await this.$axios.post('http://localhost:5000/vue-tutorial-memi/us-central1/test/wer')
+      this.textCreate = r.data
     },
     read () {
       this.$axios.get('http://localhost:5000/vue-tutorial-memi/us-central1/test')

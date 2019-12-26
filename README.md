@@ -99,7 +99,11 @@ $ yarn
 $ yarn add axios
 ```
 
-
+## 22강 error 처리
+error 처리시 console은 개발자에게만 활용이 되므로 toast를 사용한다. toast를 다 작성하는 것보다 패키지를 사용할 예정이다. [vue-toasted](https://www.npmjs.com/package/vue-toasted) 추천
+```
+$ yarn add vue-toasted
+```
 
 ## Project setup
 ```
