@@ -1,5 +1,5 @@
 <template>
-    <v-card>
+    <!-- <v-card>
         <v-card-title>
             로그인
         </v-card-title>
@@ -22,13 +22,31 @@
                 로그아웃
             </v-btn>
         </v-card-actions>
-    </v-card>
+    </v-card> -->
+  <v-container grid-list-md>
+    <v-layout align-center justify-center>
+      <v-flex xs12 sm5 class="hidden-xs-only">
+        <v-img src="https://cfl.dropboxstatic.com/static/images/empty_states/sign-in-boulder-vfl2oGV4v.png"/>
+      </v-flex>
+      <v-flex xs12 sm5>
+        <sign-in v-if="type"></sign-in>
+        <sign-up v-else></sign-up>
+      </v-flex>
+    </v-layout>
+  </v-container>
 </template>
 
 <script>
+import SignIn from '@/components/auth/signIn'
+import SignUp from '@/components/auth/signUp'
+
 export default {
+  components: {
+    SignIn, SignUp
+  },
   data () {
     return {
+      type: true,
       email: '',
       password: ''
     }

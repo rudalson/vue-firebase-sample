@@ -51,7 +51,7 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-toolbar color="lime">
+    <v-toolbar color="indigo" dark>
       <v-toolbar-side-icon @click="drawer = !drawer"></v-toolbar-side-icon>
 
       <v-toolbar-title>{{$store.state.user ? $store.state.user.displayName : 'Guest'}}</v-toolbar-title>
