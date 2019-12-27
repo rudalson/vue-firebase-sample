@@ -17,6 +17,10 @@
                 <v-icon>email</v-icon>
                 이메일 로그인
             </v-btn>
+            <v-btn color="red" @click="signOut">
+                <v-icon>offline_pin</v-icon>
+                로그아웃
+            </v-btn>
         </v-card-actions>
     </v-card>
 </template>
@@ -33,11 +37,13 @@ export default {
     async signInWithGoogle () {
       const provider = new this.$firebase.auth.GoogleAuthProvider()
       this.$firebase.auth().languageCode = 'ko'
-      const r = await this.$firebase.auth().signInWithPopup(provider)
-      console.log(r)
+      await this.$firebase.auth().signInWithPopup(provider)
     },
     async signInWithEmail () {
-      const r = await this.$firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
+      await this.$firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
+    },
+    async signOut () {
+      const r = await this.$firebase.auth().signOut()
       console.log(r)
     }
   }
