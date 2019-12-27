@@ -63,7 +63,7 @@
           <v-icon>search</v-icon>
         </v-btn>
 
-        <v-btn icon>
+        <v-btn icon @click="signOut">
           <v-icon>more_vert</v-icon>
         </v-btn>
       </v-toolbar-items>
@@ -118,7 +118,10 @@ export default {
     }
   },
   methods: {
-
+    async signOut () {
+      const r = await this.$firebase.auth().signOut()
+      console.log(r)
+    }
   }
 }
 </script>

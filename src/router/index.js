@@ -8,7 +8,11 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: Home
+    component: Home,
+    beforeEnter: (to, from, next) => {
+      console.log('bf enter')
+      next()
+    }
   },
   {
     path: '/about',
@@ -56,6 +60,13 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  console.log('before each')
+  if (Vue.prototype.$isFirebaseAuth) {
+    next()
+  }
 })
 
 export default router
