@@ -101,7 +101,13 @@ export default {
       if (!this.$refs.form.validate()) {
         return this.$toasted.global.error('필수 입력 폼을 작성해주세요')
       }
-      alert('ok')
+      await this.$firebase.auth().createUserWithEmailAndPassword(this.form.email, this.form.password)
+
+      let user = this.$firebase.auth().currentUser
+      const result = await user.updateProfile({
+        displayName: `${this.form.lastName} ${this.form.firstName}`
+      })
+      console.log(result)
     }
   }
 }

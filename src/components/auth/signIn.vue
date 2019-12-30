@@ -85,7 +85,7 @@ export default {
       if (!this.$refs.form.validate()) {
         return this.$toasted.global.error('필수 입력 폼을 작성해주세요')
       }
-      alert('ok')
+      await this.$firebase.auth().signInWithEmailAndPassword(this.form.email, this.form.password)
     }
   }
 }
