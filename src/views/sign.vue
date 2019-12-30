@@ -1,36 +1,12 @@
 <template>
-    <!-- <v-card>
-        <v-card-title>
-            로그인
-        </v-card-title>
-        <v-card-text>
-            <v-text-field label="email" v-model="email"></v-text-field>
-            <v-text-field  label="password" v-model="password" type="password"></v-text-field>
-        </v-card-text>
-        <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn color="primary" @click="signInWithGoogle">
-                <v-icon>mdi-google</v-icon>
-                구글 로그인
-            </v-btn>
-            <v-btn color="primary" @click="signInWithEmail">
-                <v-icon>email</v-icon>
-                이메일 로그인
-            </v-btn>
-            <v-btn color="red" @click="signOut">
-                <v-icon>offline_pin</v-icon>
-                로그아웃
-            </v-btn>
-        </v-card-actions>
-    </v-card> -->
   <v-container grid-list-md>
     <v-layout align-center justify-center>
       <v-flex xs12 sm5 class="hidden-xs-only">
         <v-img src="https://cfl.dropboxstatic.com/static/images/empty_states/sign-in-boulder-vfl2oGV4v.png"/>
       </v-flex>
       <v-flex xs12 sm5>
-        <sign-in v-if="type"></sign-in>
-        <sign-up v-else></sign-up>
+        <sign-in v-if="type" @changeType="type = !type"></sign-in>
+        <sign-up v-else @changeType="type = !type"></sign-up>
       </v-flex>
     </v-layout>
   </v-container>
