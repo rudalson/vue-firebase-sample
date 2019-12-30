@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-navigation-drawer v-model="drawer" fixed app>
-      <v-toolbar flat color="transparent">
+      <!-- <v-toolbar flat color="transparent">
         <v-toolbar-title>Account</v-toolbar-title>
       </v-toolbar>
       <v-divider></v-divider>
@@ -35,7 +35,7 @@
             </v-list-tile-action>
           </v-list-tile>
         </v-list-group>
-        <!-- <v-list-tile v-for="item in items" :key="item.title" :to="item.to">
+        <v-list-tile v-for="item in items" :key="item.title" :to="item.to">
           <v-list-tile-avatar>
             <v-icon>{{item.icon}}</v-icon>
           </v-list-tile-avatar>
@@ -47,12 +47,50 @@
               <v-icon color="grey lighten-1">info</v-icon>
             </v-btn>
           </v-list-tile-action>
-        </v-list-tile> -->
+        </v-list-tile>
+      </v-list> -->
+      <v-list-item>
+        <v-list-item-content>
+          <v-list-item-title class="title">
+            Account
+          </v-list-item-title>
+          <!-- <v-list-item-subtitle>
+            subtext
+          </v-list-item-subtitle> -->
+        </v-list-item-content>
+      </v-list-item>
+
+      <v-divider></v-divider>
+
+      <v-list nav>
+        <v-list-group
+          v-for="item in items"
+          :key="item.title"
+          v-model="item.active"
+          :prepend-icon="item.icon"
+          no-action
+        >
+          <template v-slot:activator>
+            <v-list-item-content>
+              <v-list-item-title v-text="item.title"></v-list-item-title>
+            </v-list-item-content>
+          </template>
+
+          <v-list-item
+            v-for="subItem in item.subItems"
+            :key="subItem.title"
+            :to="subItem.to"
+          >
+            <v-list-item-content>
+              <v-list-item-title v-text="subItem.title"></v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list-group>
       </v-list>
     </v-navigation-drawer>
 
-    <v-toolbar color="indigo" dark>
-      <v-toolbar-side-icon @click="drawer = !drawer" v-if="$store.state.user"></v-toolbar-side-icon>
+    <v-app-bar color="indigo" dark>
+      <v-app-bar-nav-icon @click="drawer = !drawer" v-if="$store.state.user"></v-app-bar-nav-icon>
       <v-toolbar-title>미정 0.0.1</v-toolbar-title>
 
       <v-spacer/>
@@ -89,13 +127,8 @@
             </v-card-actions>
           </v-card>
         </v-menu>
-
-        <!-- <v-btn icon @click="signOut">
-          <v-icon>more_vert</v-icon>
-        </v-btn> -->
       </v-toolbar-items>
-
-    </v-toolbar>
+    </v-app-bar>
 
     <v-content>
       <vue-progress-bar/>
@@ -125,7 +158,7 @@ export default {
       drawer: false,
       items: [
         {
-          icon: 'email',
+          icon: 'mdi-alert',
           title: 'Home',
           active: true,
           subItems: [
