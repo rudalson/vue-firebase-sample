@@ -110,9 +110,26 @@ $ yarn add vue-toasted
 $ yarn add vue-progressbar
 ```
 
+## 36강 firebase functions 환경변수 사용하기
+```
+$ firebase functions:config:set admin.email=이메일주소
+```
 
+이렇게 admin email을 등록한 후에 아래의 명령어로 확인가능하다
+```
+$ firebase functions:config:get
+```
 
+그리고 이것을 `.runtimeconfig.json` 파일에 저장시켜둬야 한다.
 
+```
+$ firebase functions:config:get > .runtimeconfig.json
+```
+
+그리고 아래의 명령어로 항상 udpate 시켜놓는 것이 좋다.
+```
+$ npm i -g firebase-tools
+```
 
 
 ## Project setup

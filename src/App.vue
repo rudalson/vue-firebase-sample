@@ -89,7 +89,7 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar color="indigo" dark>
+    <v-app-bar color="indigo" dark app>
       <v-app-bar-nav-icon @click="drawer = !drawer" v-if="$store.state.user"></v-app-bar-nav-icon>
       <v-toolbar-title>미정 0.0.1</v-toolbar-title>
 
