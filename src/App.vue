@@ -71,6 +71,19 @@
     </v-toolbar>
 
     <v-content>
+      <vue-progress-bar/>
+      <v-container grid-list-md>
+        <v-layout row wrap align-center justify-center>
+          <v-card color="transparent" flat v-if="!$isFirebaseAuth">
+            <v-card-text class="text-xs-center">
+              <v-progress-circular indeterminate color="primary"></v-progress-circular>
+            </v-card-text>
+            <v-card-text class="text-xs-center">
+              인증 상태를 기다리는 중입니다.
+            </v-card-text>
+          </v-card>
+        </v-layout>
+      </v-container>
       <router-view/>
     </v-content>
   </v-app>
@@ -119,8 +132,9 @@ export default {
   },
   methods: {
     async signOut () {
-      const r = await this.$firebase.auth().signOut()
-      console.log(r)
+      // const r = await this.$firebase.auth().signOut()
+      // console.log(r)
+      this.$Progress.start()
     }
   }
 }

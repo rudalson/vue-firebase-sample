@@ -95,7 +95,7 @@ $ yarn
 ```
 
 ## 21강 axios 사용
-```'
+```
 $ yarn add axios
 ```
 
@@ -104,6 +104,16 @@ error 처리시 console은 개발자에게만 활용이 되므로 toast를 사�
 ```
 $ yarn add vue-toasted
 ```
+
+## 30강 loading 상태
+```
+$ yarn add vue-progressbar
+```
+
+
+
+
+
 
 ## Project setup
 ```
