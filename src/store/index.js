@@ -7,7 +7,8 @@ export default new Vuex.Store({
   state: {
     title: '원래 제목',
     user: null,
-    token: ''
+    token: '',
+    claims: null
   },
   mutations: {
     setTitle (state, payload) {
@@ -18,6 +19,9 @@ export default new Vuex.Store({
     },
     setToken (state, token) {
       state.token = token
+    },
+    setClaims (state, claims) {
+      state.claims = claims
     }
   },
   actions: {
@@ -27,9 +31,14 @@ export default new Vuex.Store({
         return
       }
 
-      user.getIdToken()
+      return user.getIdToken()
         .then(token => {
           commit('setToken', token)
+          return user.getIdTokenResult()
+        })
+        .then(r => {
+          console.log(r)
+          commit('setClaims', r.claims)
         })
     }
   },
