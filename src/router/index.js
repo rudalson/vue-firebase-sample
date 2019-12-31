@@ -1,18 +1,23 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from '../store'
 import Home from '../views/Home.vue'
 
 Vue.use(VueRouter)
+
+const levelCheck = (to, from, next) => {
+  if (store.state.claims.level === undefined) {
+    next('/userProfile')
+  }
+  next()
+}
 
 const routes = [
   {
     path: '/',
     name: 'home',
     component: Home,
-    beforeEnter: (to, from, next) => {
-      console.log('bf enter')
-      next()
-    }
+    beforeEnter: levelCheck
   },
   {
     path: '/about',
@@ -21,6 +26,10 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+  },
+  {
+    path: '/userProfile',
+    component: () => import('../views/userProfile.vue')
   },
   {
     path: '/sign',
@@ -64,11 +73,9 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   Vue.prototype.$Progress.start()
-  setTimeout(() => {
-    if (Vue.prototype.$isFirebaseAuth) {
-      next()
-    }
-  }, 2000)
+  if (store.state.firebaseLoaded) {
+    next()
+  }
 })
 
 router.afterEach((to, from) => {

@@ -12,17 +12,9 @@ import 'firebase/firestore'
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig)
 
-// firebase.firestore().collection('test').add({ test: 'aaa' })
-//   .then(r => console.log(r))
-//   .catch(e => console.error(e))
-
 Vue.prototype.$firebase = firebase
-Vue.prototype.$isFirebaseAuth = false
 
 firebase.auth().onAuthStateChanged((user) => {
-  Vue.prototype.$isFirebaseAuth = true
-  console.log(user)
-
   store.dispatch('getUser', user)
     .then(() => {
       if (user) {

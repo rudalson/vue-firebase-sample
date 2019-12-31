@@ -80,14 +80,12 @@ export default {
       const provider = new this.$firebase.auth.GoogleAuthProvider()
       this.$firebase.auth().languageCode = 'ko'
       await this.$firebase.auth().signInWithPopup(provider)
-      await this.$firebase.auth().currrentUser.getIdToken(true)
     },
     async signInWithEmailAndPassword () {
       if (!this.$refs.form.validate()) {
         return this.$toasted.global.error('필수 입력 폼을 작성해주세요')
       }
       await this.$firebase.auth().signInWithEmailAndPassword(this.form.email, this.form.password)
-      await this.$firebase.auth().currrentUser.getIdToken(true)
     }
   }
 }
