@@ -121,6 +121,10 @@ export default {
             {
               title: 'about',
               to: '/about/'
+            },
+            {
+              title: 'users',
+              to: '/admin/users/'
             }
           ]
         },

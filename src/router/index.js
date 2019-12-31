@@ -100,6 +100,11 @@ const routes = [
     }
   },
   {
+    path: '/admin/users',
+    component: () => import('../views/admin/users.vue'),
+    beforeEnter: adminCheck
+  },
+  {
     path: '/test/lv0',
     component: () => import('../views/test/lv0.vue'),
     beforeEnter: adminCheck
