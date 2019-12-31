@@ -96,6 +96,8 @@ export default {
       const provider = new this.$firebase.auth.GoogleAuthProvider()
       this.$firebase.auth().languageCode = 'ko'
       await this.$firebase.auth().signInWithPopup(provider)
+      await this.$firebase.auth().signOut()
+      this.$emit('changeType')
     },
     async createWithEmailAndPassword () {
       if (!this.$refs.form.validate()) {
@@ -104,11 +106,11 @@ export default {
       await this.$firebase.auth().createUserWithEmailAndPassword(this.form.email, this.form.password)
 
       let user = this.$firebase.auth().currentUser
-      const result = await user.updateProfile({
+      await user.updateProfile({
         displayName: `${this.form.lastName} ${this.form.firstName}`
       })
-
-      console.log(result)
+      await this.$firebase.auth().signOut()
+      this.$emit('changeType')
     }
   }
 }

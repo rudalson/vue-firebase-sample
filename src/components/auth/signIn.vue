@@ -80,12 +80,26 @@ export default {
       const provider = new this.$firebase.auth.GoogleAuthProvider()
       this.$firebase.auth().languageCode = 'ko'
       await this.$firebase.auth().signInWithPopup(provider)
+      const user = this.$firebase.auth().currentUser
+      await user.getIdToken(true)
+      await this.$store.dispatch('getUser', user)
+      if (this.$store.state.claims.level === undefined) {
+        return this.$router.push('/userProfile')
+      }
+      this.$router.push('/')
     },
     async signInWithEmailAndPassword () {
       if (!this.$refs.form.validate()) {
         return this.$toasted.global.error('필수 입력 폼을 작성해주세요')
       }
       await this.$firebase.auth().signInWithEmailAndPassword(this.form.email, this.form.password)
+      const user = this.$firebase.auth().currentUser
+      await user.getIdToken(true)
+      await this.$store.dispatch('getUser', user)
+      if (this.$store.state.claims.level === undefined) {
+        return this.$router.push('/userProfile')
+      }
+      this.$router.push('/')
     }
   }
 }
