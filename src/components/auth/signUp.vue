@@ -10,7 +10,7 @@
             </v-card-title>
             <v-card-actions>
                 <v-btn color="primary" block @click="signInWithGoogle">
-                    <v-icon>trip_origin</v-icon>
+                    <v-icon>mdi-google</v-icon>
                     <v-divider vertical class="mx-3"></v-divider>
                     Google 계정으로 가입
                 </v-btn>
