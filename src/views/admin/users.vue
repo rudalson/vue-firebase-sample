@@ -9,6 +9,7 @@
             :items="items"
             :options.sync="options"
             :server-items-length="totalCount"
+            :items-per-page="5"
             :loading="loading"
             class="elevation-1"
           ></v-data-table>
@@ -39,9 +40,23 @@ export default {
       ]
     }
   },
+  watch: {
+    options: {
+      handler () {
+        this.list()
+      },
+      deep: true
+    }
+  },
   methods: {
     async list () {
-      const { data } = await this.$axios.get('/admin/users')
+      const { data } = await this.$axios.get('/admin/users', {
+        params: {
+          offset: this.options.page > 0 ? (this.options.page - 1) * this.options.itemsPerPage : 0,
+          limit: this.options.itemsPerPage
+        }
+      })
+      console.log(this.options)
       this.totalCount = data.totalCount
       this.items = data.items
     }
