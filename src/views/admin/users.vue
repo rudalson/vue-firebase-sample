@@ -1,19 +1,7 @@
 <template>
+  <v-container grid-list-md fluid>
     <v-card>
-        <!-- <v-card-title primary-title>
-            {{search}}
-          <v-combobox
-            v-model="search"
-            :items="emails"
-            label="이메일을 입력하세요"
-            :loading="loadingSearch"
-            @update:search-input="searchEmails"
-          ></v-combobox>
-        </v-card-title> -->
-      <v-toolbar
-        dark
-        color="teal"
-      >
+      <v-toolbar dark color="teal">
         <v-toolbar-title>회원 관리</v-toolbar-title>
         <v-spacer/>
         <v-autocomplete
@@ -31,23 +19,69 @@
           clearable
         ></v-autocomplete>
       </v-toolbar>
-        <v-card-text>
-          <v-data-table
-            :headers="headers"
-            :items="items"
-            :options.sync="options"
-            :server-items-length="totalCount"
-            :items-per-page="5"
-            :loading="loading"
-            class="elevation-1"
-            must-sort
-          ></v-data-table>
-        </v-card-text>
-        <v-card-actions>
-            <v-spacer/>
-            <v-btn @click="list">get list</v-btn>
-        </v-card-actions>
+      <v-card-text>
+        <!-- <v-data-table
+          :headers="headers"
+          :items="items"
+          :options.sync="options"
+          :server-items-length="totalCount"
+          :items-per-page="5"
+          :loading="loading"
+          class="elevation-1"
+          must-sort
+        ></v-data-table> -->
+        <v-data-iterator
+          :items="items"
+          :options.sync="options"
+          :server-items-length="totalCount"
+          :items-per-page="4"
+          :loading="loading"
+        >
+          <template v-slot:default="props">
+            <v-layout row wrap>
+              <v-flex xs12 v-if="loading" class="text-center">
+                <v-progress-circular indeterminate color="primary"></v-progress-circular>
+                <p>잠시만 기다려 주세요</p>
+              </v-flex>
+              <v-flex
+                v-else
+                v-for="item in props.items"
+                :key="item.email"
+                xs12
+                sm6
+                md4
+                lg3
+              >
+                <v-card
+                  :color="item.color"
+                  dark
+                >
+                  <div class="d-flex flex-no-wrap justify-space-between">
+                    <v-avatar
+                      class="ma-3"
+                      size="125"
+                      tile
+                    >
+                      <v-img :src="item.photoURL | imgCheck"></v-img>
+                    </v-avatar>
+
+                    <div>
+                      <v-card-title
+                        class="mb-2"
+                        v-text="item.email"
+                      ></v-card-title>
+
+                      <v-card-subtitle>{{item.displayName | nameCheck}}</v-card-subtitle>
+                    </div>
+                  </div>
+                </v-card>
+              </v-flex>
+            </v-layout>
+          </template>
+        </v-data-iterator>
+      </v-card-text>
     </v-card>
+  </v-container>
 </template>
 
 <script>
@@ -87,6 +121,21 @@ export default {
     },
     search (val) {
       val && val !== this.select && this.searchEmails(val)
+    },
+    email (n, o) {
+      if (n !== o) {
+        this.list()
+      }
+    }
+  },
+  filters: {
+    nameCheck (v) {
+      if (v) return v
+      return '이름 없음'
+    },
+    imgCheck (v) {
+      if (v) return v
+      return 'https://cdn.vuetifyjs.com/images/cards/halcyon.png'
     }
   },
   methods: {
@@ -98,13 +147,12 @@ export default {
           limit: this.options.itemsPerPage,
           order: this.options.sortBy[0],
           sort: this.options.sortDesc[0] ? 'desc' : 'asc',
-          search: this.search
+          search: this.email
         }
       })
       this.totalCount = data.totalCount
       this.items = data.items
       this.loading = false
-      console.log(this.options)
     },
     searchEmails: _.debounce(
       function (val) {
