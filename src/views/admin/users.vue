@@ -1,7 +1,6 @@
 <template>
     <v-card>
-        <v-card-title primary-title>
-            <!-- 사용자 관리 -->
+        <!-- <v-card-title primary-title>
             {{search}}
           <v-combobox
             v-model="search"
@@ -10,7 +9,28 @@
             :loading="loadingSearch"
             @update:search-input="searchEmails"
           ></v-combobox>
-        </v-card-title>
+        </v-card-title> -->
+      <v-toolbar
+        dark
+        color="teal"
+      >
+        <v-toolbar-title>회원 관리</v-toolbar-title>
+        <v-spacer/>
+        <v-autocomplete
+          v-model="email"
+          :loading="loadingSearch"
+          :items="emails"
+          :search-input.sync="search"
+          cache-items
+          class="mx-4"
+          flat
+          hide-no-data
+          hide-details
+          label="이메일을 입력하세요"
+          solo-inverted
+          clearable
+        ></v-autocomplete>
+      </v-toolbar>
         <v-card-text>
           <v-data-table
             :headers="headers"
@@ -54,6 +74,7 @@ export default {
       },
       search: '',
       emails: [],
+      email: null,
       loadingSearch: false
     }
   },
@@ -63,6 +84,9 @@ export default {
         this.list()
       },
       deep: true
+    },
+    search (val) {
+      val && val !== this.select && this.searchEmails(val)
     }
   },
   methods: {
@@ -83,11 +107,18 @@ export default {
       console.log(this.options)
     },
     searchEmails: _.debounce(
-      function () {
+      function (val) {
         this.loadingSearch = true
-        this.$axios.get('/admin/search')
+        this.$axios.get('/admin/search', {
+          params: { search: this.search }
+        })
           .then(({ data }) => {
             this.emails = data
+          })
+          .catch(e => {
+            this.$toasted.global.error(e.message)
+          })
+          .finally(() => {
             this.loadingSearch = false
             this.list()
           })
