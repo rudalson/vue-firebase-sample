@@ -8,7 +8,7 @@ module.exports = (req, res, next) => {
       req.claims = decodedToken
       next()
     }).catch(function (e) {
-      console.log(e.message)
+      console.error(e.message)
       res.status(401).send()
     })
   // next()

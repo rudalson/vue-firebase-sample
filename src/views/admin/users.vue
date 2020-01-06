@@ -18,6 +18,9 @@
           solo-inverted
           clearable
         ></v-autocomplete>
+        <v-btn icon @click="list" :disabled="loading">
+          <v-icon>mdi-refresh</v-icon>
+        </v-btn>
       </v-toolbar>
       <v-card-text>
         <!-- <v-data-table
@@ -41,7 +44,7 @@
             <v-layout row wrap>
               <v-flex xs12 v-if="loading" class="text-center">
                 <v-progress-circular indeterminate color="primary"></v-progress-circular>
-                <p>잠시만 기다려 주세요</p>
+                <p>데이터 로딩중</p>
               </v-flex>
               <v-flex
                 v-else
@@ -52,29 +55,7 @@
                 md4
                 lg3
               >
-                <v-card
-                  :color="item.color"
-                  dark
-                >
-                  <div class="d-flex flex-no-wrap justify-space-between">
-                    <v-avatar
-                      class="ma-3"
-                      size="125"
-                      tile
-                    >
-                      <v-img :src="item.photoURL | imgCheck"></v-img>
-                    </v-avatar>
-
-                    <div>
-                      <v-card-title
-                        class="mb-2"
-                        v-text="item.email"
-                      ></v-card-title>
-
-                      <v-card-subtitle>{{item.displayName | nameCheck}}</v-card-subtitle>
-                    </div>
-                  </div>
-                </v-card>
+                <user-card :item="item"></user-card>
               </v-flex>
             </v-layout>
           </template>
@@ -86,22 +67,25 @@
 
 <script>
 import _ from 'lodash'
+import UserCard from '@/components/userCard'
+
 export default {
+  components: { UserCard },
   data () {
     return {
-      totalCount: 0,
-      items: [],
-      loading: false,
       headers: [
         {
-          text: '유저키',
+          text: 'uid',
           value: 'uid'
         },
         { text: 'email', value: 'email' },
-        { text: '이름', value: 'displayName' },
+        { text: 'displayName', value: 'displayName' },
         { text: 'photoURL', value: 'photoURL' },
         { text: 'level', value: 'level' }
       ],
+      items: [],
+      totalCount: 0,
+      loading: false,
       options: {
         sortBy: ['email'],
         sortDesc: [false]
@@ -131,7 +115,7 @@ export default {
   filters: {
     nameCheck (v) {
       if (v) return v
-      return '이름 없음'
+      return 'no name'
     },
     imgCheck (v) {
       if (v) return v
@@ -178,6 +162,6 @@ export default {
 }
 </script>
 
-<style lang="stylus">
+<style>
 
 </style>

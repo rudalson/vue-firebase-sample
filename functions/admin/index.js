@@ -27,7 +27,10 @@ app.get('/users', async (req, res) => {
 
   let s = null
   if (search) {
-    s = await db.collection('users').where('email', '==', search).limit(1).get()
+    s = await db.collection('users')
+      .where('email', '==', search)
+      .limit(1)
+      .get()
     r.totalCount = s.size
   } else {
     const t = await db.collection('infos').doc('users').get()
@@ -45,9 +48,27 @@ app.get('/search', async (req, res) => {
     .get()
 
   const items = []
-
-  s.forEach(v => items.push(v.data().email))
+  s.forEach(v => {
+    items.push(v.data().email)
+  })
   res.send(items)
+})
+
+app.patch('/user/:uid/level', async (req, res) => {
+  if (!req.params.uid) {
+    return res.status(400).end()
+  }
+  if (req.body.level === undefined) {
+    return res.status(400).end()
+  }
+
+  const uid = req.params.uid
+  const level = req.body.level
+  const claims = { level }
+  await admin.auth().setCustomUserClaims(uid, claims)
+  await db.collection('users').doc(uid).update(claims)
+
+  res.status(200).end()
 })
 
 app.use(require('../middlewares/error'))

@@ -18,7 +18,7 @@ exports.test = functions.https.onRequest(require('./test'))
 exports.admin = functions.https.onRequest(require('./admin'))
 
 exports.createUser = functions.auth.user().onCreate(async (user) => {
-  const { uid, email, displayName, emailVerified, photoURL, disabled } = user
+  const { uid, email, displayName, emailVerified, photoURL, disabled, level } = user
   let claims = { level: 2 }
 
   if (functions.config().admin.email === user.email && user.emailVerified) {
@@ -28,7 +28,7 @@ exports.createUser = functions.auth.user().onCreate(async (user) => {
   await admin.auth().setCustomUserClaims(uid, claims)
 
   const d = {
-    uid, email, displayName, emailVerified, photoURL, disabled
+    uid, email, displayName, emailVerified, photoURL, disabled, level
   }
   const r = await db.collection('users').doc(uid).set(d)
   return r
@@ -41,7 +41,7 @@ exports.deleteUser = functions.auth.user().onDelete((user) => {
 exports.incrementUserCount = functions.firestore
   .document('users/{userId}')
   .onCreate((snap, context) => {
-    db.collection('infos').doc('users').update(
+    return db.collection('infos').doc('users').update(
       'counter', admin.firestore.FieldValue.increment(1)
     )
   })
@@ -49,7 +49,7 @@ exports.incrementUserCount = functions.firestore
 exports.decrementUserCount = functions.firestore
   .document('users/{userID}')
   .onDelete((snap, context) => {
-    db.collection('infos').doc('users').update(
+    return db.collection('infos').doc('users').update(
       'counter', admin.firestore.FieldValue.increment(-1)
     )
   })

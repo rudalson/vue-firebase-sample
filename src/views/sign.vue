@@ -37,8 +37,7 @@ export default {
       await this.$firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
     },
     async signOut () {
-      const r = await this.$firebase.auth().signOut()
-      console.log(r)
+      await this.$firebase.auth().signOut()
     }
   }
 }

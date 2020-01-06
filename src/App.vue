@@ -6,9 +6,6 @@
           <v-list-item-title class="title">
             Account
           </v-list-item-title>
-          <!-- <v-list-item-subtitle>
-            subtext
-          </v-list-item-subtitle> -->
         </v-list-item-content>
       </v-list-item>
 
@@ -110,8 +107,8 @@ export default {
       drawer: false,
       items: [
         {
-          icon: 'mdi-alert',
-          title: 'Home',
+          icon: 'mdi-home',
+          title: 'home',
           active: true,
           subItems: [
             {
@@ -121,10 +118,6 @@ export default {
             {
               title: 'about',
               to: '/about/'
-            },
-            {
-              title: 'users',
-              to: '/admin/users/'
             }
           ]
         },
@@ -159,6 +152,17 @@ export default {
             {
               title: 'lv2',
               to: '/test/lv2'
+            }
+          ]
+        },
+        {
+          icon: 'mdi-account-key',
+          title: 'Admin',
+          active: false,
+          subItems: [
+            {
+              title: '회원 관리',
+              to: '/admin/users'
             }
           ]
         }
