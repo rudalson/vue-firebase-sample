@@ -140,6 +140,10 @@ const routes = [
     component: () => import('../views/lectures/vuex')
   },
   {
+    path: '/lectures/storage',
+    component: () => import('../views/lectures/storage')
+  },
+  {
     path: '/lectures/notes',
     component: () => import('../views/lectures/notes.vue')
   },
