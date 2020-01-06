@@ -155,6 +155,12 @@ yarn build
 yarn lint
 ```
 
+### firebase deploy
+54강 내용 숙지 후 Firebase에 deploy
+```shell script
+$ yarn firebase:deploy
+```
+
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
 

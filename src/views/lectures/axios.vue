@@ -98,21 +98,18 @@ export default {
         .then(r => {
           this.textRead = r.data
         })
-        .catch(e => console.error(e.message))
     },
     update () {
       this.$axios.put('http://localhost:5000/vue-tutorial-memi/us-central1/test/123')
         .then(r => {
           this.textUpdate = r.data
         })
-        .catch(e => console.error(e.message))
     },
     del () {
       this.$axios.delete('http://localhost:5000/vue-tutorial-memi/us-central1/test/456')
         .then(r => {
           this.textDelete = r.data
         })
-        .catch(e => console.error(e.message))
     }
   }
 }

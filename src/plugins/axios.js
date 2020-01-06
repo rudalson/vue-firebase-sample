@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import axios from 'axios'
 import store from '../store'
+import firebaseConfig from '../../firebaseConfig'
 
 const firebaseAPI = axios.create({
-  baseURL: process.env.NODE_ENV === 'production' ? 'https://us-central1-vue-tutorial-memi.cloudfunctions.net/' : 'http://localhost:5000/vue-tutorial-memi/us-central1/',
-  timeout: 5000,
-  headers: { 'X-Custom-Header': 'foobar' }
+  baseURL: process.env.NODE_ENV === 'production' ? `https://us-central1-${firebaseConfig.projectId}.cloudfunctions.net/` : `http://localhost:5000/${firebaseConfig.projectId}/us-central1/`,
+  timeout: 5000
 })
 
 // Add a request interceptor

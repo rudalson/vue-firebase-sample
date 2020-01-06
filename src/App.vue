@@ -40,7 +40,7 @@
 
     <v-app-bar color="indigo" dark app>
       <v-app-bar-nav-icon @click="drawer = !drawer" v-if="$store.state.user"></v-app-bar-nav-icon>
-      <v-toolbar-title>미정 0.0.1</v-toolbar-title>
+      <v-toolbar-title>미정 0.0.1 {{ env }}</v-toolbar-title>
 
       <v-spacer/>
       <v-toolbar-items v-if="$store.state.user">
@@ -104,6 +104,7 @@ export default {
   name: 'App',
   data () {
     return {
+      env: process.env.NODE_ENV,
       drawer: false,
       items: [
         {

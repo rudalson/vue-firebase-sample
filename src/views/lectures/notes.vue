@@ -63,12 +63,11 @@ export default {
   },
   methods: {
     async post () {
-      const r = await this.$firebase.firestore().collection('notes').add({
+      await this.$firebase.firestore().collection('notes').add({
         title: this.title,
         content: this.content
       })
       await this.get()
-      console.log(r)
       this.title = ''
       this.content = ''
     },
@@ -76,28 +75,24 @@ export default {
       const snapshot = await this.$firebase.firestore().collection('notes').get()
       this.items = []
       snapshot.forEach(v => {
-        console.log(v.id)
         const { title, content } = v.data()
         this.items.push({
           title, content, id: v.id
         })
       })
-      console.log(snapshot)
     },
     async put (id) {
-      const r = await this.$firebase.firestore().collection('notes').doc(id).set({
+      await this.$firebase.firestore().collection('notes').doc(id).set({
         title: this.title,
         content: this.content
       })
       await this.get()
       this.title = ''
       this.content = ''
-      console.log(r)
     },
     async del (id) {
-      const r = await this.$firebase.firestore().collection('notes').doc(id).delete()
+      await this.$firebase.firestore().collection('notes').doc(id).delete()
       await this.get()
-      console.log(r)
     }
   }
 }

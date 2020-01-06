@@ -18,7 +18,6 @@ Vue.use(VueRouter)
 // }
 
 const adminCheck = (to, from, next) => {
-  console.log(store.state.user)
   if (!store.state.user) {
     if (to.path !== '/sign') {
       return next('/sign')
@@ -35,7 +34,6 @@ const adminCheck = (to, from, next) => {
 }
 
 const userCheck = (to, from, next) => {
-  console.log(store.state.user)
   if (!store.state.user) {
     if (to.path !== '/sign') {
       return next('/sign')
@@ -52,7 +50,6 @@ const userCheck = (to, from, next) => {
 }
 
 const guestCheck = (to, from, next) => {
-  console.log(store.state.user)
   if (!store.state.user) {
     if (to.path !== '/sign') {
       return next('/sign')
