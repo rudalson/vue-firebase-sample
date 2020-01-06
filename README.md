@@ -134,6 +134,15 @@ $ npm i -g firebase-tools
 ## 44강 Service key
 `firebase`의 `프로젝트 설정`-`서비스 계정` 탭에서 `Google Cloud Platform`의 서비스 계정으로 들어간다. 그래서 해당 프로젝트에서 키만들기를 선택한 후 `json 키`를 만들어서 down 받은 후 functions 디렉토리 밑에 이동시켜준다.
 
+## 55강 Internet Explorer Support
+```shell script
+$ yarn add babel-polyfill
+```
+
+
+
+
+
 
 ## Project setup
 ```
