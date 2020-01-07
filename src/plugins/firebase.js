@@ -8,8 +8,8 @@ import store from '../store'
 import 'firebase/auth'
 import 'firebase/firestore'
 import 'firebase/firebase-storage'
+import 'firebase/database'
 
-// Initialize Firebase
 firebase.initializeApp(firebaseConfig)
 
 Vue.prototype.$firebase = firebase

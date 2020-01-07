@@ -145,6 +145,10 @@ const routes = [
     component: () => import('../views/lectures/grid')
   },
   {
+    path: '/lectures/rdb',
+    component: () => import('../views/lectures/rdb')
+  },
+  {
     path: '/lectures/notes',
     component: () => import('../views/lectures/notes.vue')
   },
