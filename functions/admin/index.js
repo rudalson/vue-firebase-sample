@@ -23,7 +23,6 @@ app.get('/users', async (req, res) => {
     items: [],
     totalCount: 0
   }
-
   let s = null
   if (search) {
     s = await db.collection('users')
@@ -41,10 +40,7 @@ app.get('/users', async (req, res) => {
 })
 
 app.get('/search', async (req, res) => {
-  const s = await db.collection('users')
-    .where('email', '>=', req.query.search)
-    .limit(3)
-    .get()
+  const s = await db.collection('users').where('email', '>=', req.query.search).limit(3).get()
 
   const items = []
   s.forEach(v => {
@@ -54,20 +50,24 @@ app.get('/search', async (req, res) => {
 })
 
 app.patch('/user/:uid/level', async (req, res) => {
-  if (!req.params.uid) {
-    return res.status(400).end()
-  }
-  if (req.body.level === undefined) {
-    return res.status(400).end()
-  }
-
+  if (!req.params.uid) return res.status(400).end()
+  if (req.body.level === undefined) return res.status(400).end()
   const uid = req.params.uid
   const level = req.body.level
   const claims = { level }
   await admin.auth().setCustomUserClaims(uid, claims)
   await db.collection('users').doc(uid).update(claims)
 
-  res.status(200).end()
+  res.status(204).end()
+})
+
+app.delete('/user/:uid', async (req, res) => {
+  const uid = req.params.uid
+  if (!uid) return res.status(400).end()
+
+  await admin.auth().deleteUser(uid)
+
+  res.status(204).end()
 })
 
 app.use(require('../middlewares/error'))

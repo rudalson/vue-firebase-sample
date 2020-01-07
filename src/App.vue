@@ -42,13 +42,20 @@
       <v-app-bar-nav-icon @click="drawer = !drawer" v-if="$store.state.user"></v-app-bar-nav-icon>
       <v-toolbar-title>미정 0.0.1 {{ env }}</v-toolbar-title>
 
-      <v-spacer/>
+      <v-spacer></v-spacer>
       <v-toolbar-items v-if="$store.state.user">
         <v-menu offset-y>
           <template v-slot:activator="{ on }">
-            <v-btn icon v-on="on">
-              <v-avatar :size="32" color="grey lighten-4">
-                <img :src="$store.state.user.photoURL" alt="avatar">
+            <v-btn
+              icon
+              v-on="on"
+            >
+              <v-avatar
+                size="32"
+                color="grey lighten-4"
+              >
+                <img v-if="$store.state.user.photoURL" :src="$store.state.user.photoURL" alt="avatar">
+                <v-icon v-else>mdi-account</v-icon>
               </v-avatar>
             </v-btn>
           </template>
@@ -56,13 +63,17 @@
             <v-container grid-list-md>
               <v-layout row wrap>
                 <v-flex xs4>
-                  <v-avatar :size="96" color="grey lighten-4">
-                    <img :src="$store.state.user.photoURL" alt="avatar">
+                  <v-avatar
+                    size="96"
+                    color="grey lighten-4"
+                  >
+                    <img v-if="$store.state.user.photoURL" :src="$store.state.user.photoURL" alt="avatar">
+                    <v-icon v-else>mdi-account</v-icon>
                   </v-avatar>
                 </v-flex>
                 <v-flex xs8>
                   <v-card-text>
-                    <span class="font-weight-bold">{{$store.state.user.displayName}}</span>
+                    <span class="font-weight-bold"> {{$store.state.user.displayName}}</span>
                     <br>
                     <span class="font-weight-thin">{{$store.state.user.email}}</span>
                   </v-card-text>
@@ -74,6 +85,7 @@
               <v-spacer/>
               <v-btn color="primary" @click="signOut">로그아웃</v-btn>
             </v-card-actions>
+
           </v-card>
         </v-menu>
       </v-toolbar-items>
@@ -113,7 +125,7 @@ export default {
           active: true,
           subItems: [
             {
-              title: 'dashboard',
+              title: 'Dashboard',
               to: '/'
             },
             {

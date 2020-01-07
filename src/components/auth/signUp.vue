@@ -100,22 +100,21 @@ export default {
       this.$emit('changeType')
     },
     async createWithEmailAndPassword () {
-      if (!this.$refs.form.validate()) {
-        return this.$toasted.global.error('필수 입력 폼을 작성해주세요')
-      }
+      if (!this.$refs.form.validate()) return this.$toasted.global.error('입력 폼을 올바르게 작성해주세요.')
       await this.$firebase.auth().createUserWithEmailAndPassword(this.form.email, this.form.password)
-
-      let user = this.$firebase.auth().currentUser
+      this.$toasted.global.notice('가입이 완료되었습니다. 이메일을 확인해주세요')
+      const user = this.$firebase.auth().currentUser
       await user.updateProfile({
         displayName: `${this.form.lastName} ${this.form.firstName}`
       })
+      this.$firebase.auth().languageCode = 'ko'
+      await user.sendEmailVerification()
       await this.$firebase.auth().signOut()
       this.$emit('changeType')
     }
   }
 }
 </script>
-
 <style scoped>
 .recaptcha-terms-text {
     font-size: 12px;

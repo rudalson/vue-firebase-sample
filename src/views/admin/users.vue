@@ -3,7 +3,7 @@
     <v-card>
       <v-toolbar dark color="teal">
         <v-toolbar-title>회원 관리</v-toolbar-title>
-        <v-spacer/>
+        <v-spacer></v-spacer>
         <v-autocomplete
           v-model="email"
           :loading="loadingSearch"
@@ -22,17 +22,7 @@
           <v-icon>mdi-refresh</v-icon>
         </v-btn>
       </v-toolbar>
-      <v-card-text>
-        <!-- <v-data-table
-          :headers="headers"
-          :items="items"
-          :options.sync="options"
-          :server-items-length="totalCount"
-          :items-per-page="5"
-          :loading="loading"
-          class="elevation-1"
-          must-sort
-        ></v-data-table> -->
+      <v-container grid-list-md fluid>
         <v-data-iterator
           :items="items"
           :options.sync="options"
@@ -55,12 +45,12 @@
                 md4
                 lg3
               >
-                <user-card :item="item"></user-card>
+                <user-card :item="item" @del="list"></user-card>
               </v-flex>
             </v-layout>
           </template>
         </v-data-iterator>
-      </v-card-text>
+      </v-container>
     </v-card>
   </v-container>
 </template>
@@ -104,12 +94,10 @@ export default {
       deep: true
     },
     search (val) {
-      val && val !== this.select && this.searchEmails(val)
+      val && val !== this.email && this.searchEmails(val)
     },
     email (n, o) {
-      if (n !== o) {
-        this.list()
-      }
+      if (n !== o) this.list()
     }
   },
   filters: {
@@ -141,6 +129,7 @@ export default {
     searchEmails: _.debounce(
       function (val) {
         this.loadingSearch = true
+
         this.$axios.get('/admin/search', {
           params: { search: this.search }
         })
