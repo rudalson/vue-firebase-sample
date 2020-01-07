@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import axios from 'axios'
+import moment from 'moment'
 import store from '../store'
 import firebaseConfig from '../../firebaseConfig'
 
@@ -8,13 +9,12 @@ const firebaseAPI = axios.create({
   timeout: 5000
 })
 
-// Add a request interceptor
-firebaseAPI.interceptors.request.use(function (config) {
-  // Do something before request is sent
+firebaseAPI.interceptors.request.use(async (config) => {
+  const dif = moment(store.state.claims.exp * 1000).diff(moment(), 'minutes')
+  if (dif < 10) await store.dispatch('getToken')
   config.headers.authorization = store.state.token
   return config
 }, function (error) {
-  // Do something with request error
   return Promise.reject(error)
 })
 

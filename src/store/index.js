@@ -12,8 +12,8 @@ export default new Vuex.Store({
     firebaseLoaded: false
   },
   mutations: {
-    setTitle (state, payload) {
-      state.title = payload
+    setTitle (state, p) {
+      state.title = p
     },
     setUser (state, user) {
       state.user = user
@@ -29,19 +29,20 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    async getUser ({ commit }, user) {
-      commit('setFirebaseLoaded')
+    async getUser ({ dispatch, commit }, user) {
       commit('setUser', user)
       if (!user) {
         return null
       }
-
-      const token = await user.getIdToken()
-      commit('setToken', token)
-      const { claims } = await user.getIdTokenResult()
-      commit('setClaims', claims)
-
+      await dispatch('getToken')
+      commit('setFirebaseLoaded')
       return true
+    },
+    async getToken ({ commit, state }) {
+      const token = await state.user.getIdToken(true)
+      commit('setToken', token)
+      const { claims } = await state.user.getIdTokenResult()
+      commit('setClaims', claims)
     }
   },
   modules: {

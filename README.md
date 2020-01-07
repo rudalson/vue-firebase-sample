@@ -139,7 +139,10 @@ $ npm i -g firebase-tools
 $ yarn add babel-polyfill
 ```
 
-
+## 56강 토큰 재발급 받기
+```shell script
+$ yarn add moment
+```
 
 
 
