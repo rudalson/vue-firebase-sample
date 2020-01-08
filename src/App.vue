@@ -8,7 +8,6 @@
           </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-
       <v-divider></v-divider>
 
       <v-list nav>
@@ -37,7 +36,6 @@
         </v-list-group>
       </v-list>
     </v-navigation-drawer>
-
     <v-app-bar color="indigo" dark app>
       <v-app-bar-nav-icon @click="drawer = !drawer" v-if="$store.state.user"></v-app-bar-nav-icon>
       <v-toolbar-title>미정 0.0.1 {{ env }}</v-toolbar-title>
@@ -82,7 +80,8 @@
             </v-container>
             <v-divider></v-divider>
             <v-card-actions>
-              <v-spacer/>
+              <v-spacer></v-spacer>
+              <v-btn color="primary" outlined @click="$router.push('/userProfile')">회원정보</v-btn>
               <v-btn color="primary" @click="signOut">로그아웃</v-btn>
             </v-card-actions>
 
